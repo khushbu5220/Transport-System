@@ -24,20 +24,23 @@ public interface Entry_moduleRepository extends JpaRepository<Entry_module, Long
 	@Query("Select e from Entry_module e where e.status is not :status and e.division_name= :division ORDER BY e.cdt DESC")
 	List<Entry_module> findByStatus(@Param("status") String status, @Param("division") String division);
 
+	@Query("Select e from Entry_module e where e.division_name= :division_name and (e.status= :status1 or e.status= :status2 or e.status= :status3) ORDER BY e.cdt DESC")
+	List<Entry_module> findByStatus(@Param("status1") String status1, @Param("status2") String status2, @Param("status3") String status3, @Param("division_name") String division_name);
+	
 	@Query("Select e from Entry_module e where e.status= :status1 or e.status= :status2 or e.status= :status3 ORDER BY e.cdt DESC")
 	List<Entry_module> findByStatus(@Param("status1") String status1, @Param("status2") String status2, @Param("status3") String status3);
 	
 	@Query("Select e from Entry_module e where e.userid= :userid and (e.status= :status1 or e.status= :status2 or e.status= :status3) ORDER BY e.cdt DESC")
 	List<Entry_module> findApproved(@Param("userid") Long userid, @Param("status1") String status1, @Param("status2") String status2, @Param("status3") String status3);
 	
-	@Query("Select count(e) from Entry_module e where e.status= :status")
-	Long count(@Param("status") String status);
+	@Query("Select e from Entry_module e where e.status= :status ORDER BY e.cdt DESC")
+	List<Entry_module> countlist(@Param("status") String status);
 	
-	@Query("Select e from Entry_module e where e.status= :status and e.userid= :userid")
+	@Query("Select e from Entry_module e where e.status= :status and e.userid= :userid ORDER BY e.cdt DESC")
 	List<Entry_module> countByUserid(@Param("status") String status, @Param("userid") Long userid);
 	
-	@Query("Select count(e) from Entry_module e where e.status= :status and e.division_name= :division")
-	Long countByDiv(@Param("status") String status, @Param("division") String division);
+	@Query("Select e from Entry_module e where e.status= :status and e.division_name= :division")
+	List<Entry_module> countByDiv(@Param("status") String status, @Param("division") String division);
 	
 	@Query("Select e from Entry_module e where e.status= :status1 or e.status= :status2 or e.status= :status3 and e.division_name= :division_name or e.cdt>= :from_date or e.cdt<= :to_date ORDER BY e.cdt DESC")
 	List<Entry_module> filterData(@Param("status1") String status1,@Param("status2") String status2,@Param("status3") String status3, @Param("division_name") String division_name, @Param("from_date") Date from_date, @Param("to_date") Date to_date);

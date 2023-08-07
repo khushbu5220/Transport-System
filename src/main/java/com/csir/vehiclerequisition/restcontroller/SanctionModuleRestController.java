@@ -65,20 +65,76 @@ public class SanctionModuleRestController
 			
 			List<Entry_module> entry_module = entrymodulerepository.findByStatus("Saved", division);
 			Long tot_booking = (long) entry_module.size();
-			Long pending_booking = entrymodulerepository.countByDiv("Submitted", division);
-			List<Entry_module> em = entrymodulerepository.findByStatus("Approved", "Allocated", "Not allocated");
+			List<Entry_module> pb = entrymodulerepository.countByDiv("Submitted", division);
+			Long pending_booking = (long) pb.size();
+			List<Entry_module> em = entrymodulerepository.findByStatus("Approved", "Allocated", "Not allocated", division);
 			
 			Long approved_booking = (long) em.size();
-			Long allocated_booking = entrymodulerepository.countByDiv("Allocated", division);
+			Long allocated_booking = (long) entrymodulerepository.countByDiv("Allocated", division).size();
 			ret.setTot_booking(tot_booking);
 			ret.setPending_booking(pending_booking);
 			ret.setApproved_booking(approved_booking);
 			ret.setAllocated_booking(allocated_booking);
 			ret.setEntry_module(entry_module);
+			System.out.println("list : "+ret.toString());
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	@GetMapping("/ViewEntryModuleList/sanction_pending_request")
+	public List<Entry_module> Sanction_Pending_Request()
+	{
+		List<Entry_module> ret = null;
+		try
+		{
+			String name = JwtAuthentication.checkname();
+			Users user = userrepository.findByEmailID(name);
+			String division = divisionrepository.findDivision(user.getId());
+			ret = entrymodulerepository.countByDiv("Submitted", division);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(); 
+		}
+		return ret;
+	}
+	
+	@GetMapping("/ViewEntryModuleList/sanction_approved_request")
+	public List<Entry_module> Sanction_approved_Request()
+	{
+		List<Entry_module> ret = null;
+		try
+		{
+			String name = JwtAuthentication.checkname();
+			Users user = userrepository.findByEmailID(name);
+			String division = divisionrepository.findDivision(user.getId());
+			ret = entrymodulerepository.findByStatus("Approved", "Allocated", "Not allocated", division);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(); 
+		}
+		return ret;
+	}
+	
+	@GetMapping("/ViewEntryModuleList/sanction_allocated_request")
+	public List<Entry_module> Sanction_allocated_Request()
+	{
+		List<Entry_module> ret = null;
+		try
+		{
+			String name = JwtAuthentication.checkname();
+			Users user = userrepository.findByEmailID(name);
+			String division = divisionrepository.findDivision(user.getId());
+			ret = entrymodulerepository.countByDiv("Allocated", division);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(); 
 		}
 		return ret;
 	}
@@ -181,11 +237,11 @@ public class SanctionModuleRestController
 			{
 				List<Entry_module> entry_module = entrymodulerepository.findByStatus("Saved", division);
 				Long tot_booking = (long) entry_module.size();
-				Long pending_booking = entrymodulerepository.countByDiv("Submitted", division);
-				List<Entry_module> em = entrymodulerepository.findByStatus("Approved", "Allocated", "Not allocated");
+				Long pending_booking = (long) entrymodulerepository.countByDiv("Submitted", division).size();
+				List<Entry_module> em = entrymodulerepository.findByStatus("Approved", "Allocated", "Not allocated", division);
 				
 				Long approved_booking = (long) em.size();
-				Long allocated_booking = entrymodulerepository.countByDiv("Allocated", division);
+				Long allocated_booking = (long) entrymodulerepository.countByDiv("Allocated", division).size();
 				ret.setTot_booking(tot_booking);
 				ret.setPending_booking(pending_booking);
 				ret.setApproved_booking(approved_booking);

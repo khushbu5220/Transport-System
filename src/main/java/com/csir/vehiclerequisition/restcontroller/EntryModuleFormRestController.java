@@ -466,7 +466,7 @@ public class EntryModuleFormRestController
 				List<Entry_module> entry_module = entrymodulerepository.findByUser_id(user.getId());
 				Long tot_booking = (long) entry_module.size();
 				List<Entry_module> pending_booking = entrymodulerepository.countByUserid("Submitted", user.getId());
-				List<Entry_module> em = entrymodulerepository.findByStatus("Approved", "Allocated", "Not allocated");
+				List<Entry_module> em = entrymodulerepository.findApproved(user.getId(), "Approved", "Allocated", "Not allocated");
 				Long approved_booking = (long) em.size();
 				List<Entry_module> allocated_booking = entrymodulerepository.countByUserid("Allocated", user.getId());
 				ret.setTot_booking(tot_booking);

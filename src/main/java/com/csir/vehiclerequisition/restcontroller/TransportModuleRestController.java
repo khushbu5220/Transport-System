@@ -60,8 +60,8 @@ public class TransportModuleRestController
 			
 			List<Entry_module> entry_module = entrymodulerepository.findByStatus("Approved", "Allocated", "Not allocated");
 			System.out.println("entry_module : "+entry_module);
-			Long pending_booking = entrymodulerepository.count("Approved");
-			Long approved_booking = entrymodulerepository.count("Allocated");
+			Long pending_booking = (long) entrymodulerepository.countlist("Approved").size();
+			Long approved_booking = (long) entrymodulerepository.countlist("Allocated").size();
 			Long tot_booking = (long) entry_module.size();
 			ret.setTot_booking(tot_booking);
 			ret.setPending_booking(pending_booking);
@@ -71,6 +71,40 @@ public class TransportModuleRestController
 		catch(Exception e)
 		{
 			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	@GetMapping("/ViewEntryModuleList/transport_pending_request")
+	public List<Entry_module> Transport_Pending_Request()
+	{
+		List<Entry_module> ret = null;
+		try
+		{
+			String name = JwtAuthentication.checkname();
+			Users user = userrepository.findByEmailID(name);
+			ret = entrymodulerepository.countlist("Approved");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(); 
+		}
+		return ret;
+	}
+	
+	@GetMapping("/ViewEntryModuleList/transport_approved_request")
+	public List<Entry_module> Transport_approved_Request()
+	{
+		List<Entry_module> ret = null;
+		try
+		{
+			String name = JwtAuthentication.checkname();
+			Users user = userrepository.findByEmailID(name);
+			ret = entrymodulerepository.countlist("Allocated");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace(); 
 		}
 		return ret;
 	}
@@ -169,8 +203,8 @@ public class TransportModuleRestController
 			else
 			{
 				List<Entry_module> entry_module = entrymodulerepository.findByStatus("Approved", "Allocated", "Not allocated");
-				Long pending_booking = entrymodulerepository.count("Approved");
-				Long approved_booking = entrymodulerepository.count("Allocated");
+				Long pending_booking = (long) entrymodulerepository.countlist("Approved").size();
+				Long approved_booking = (long) entrymodulerepository.countlist("Allocated").size();
 				Long tot_booking = (long) entry_module.size();
 				ret.setTot_booking(tot_booking);
 				ret.setPending_booking(pending_booking);

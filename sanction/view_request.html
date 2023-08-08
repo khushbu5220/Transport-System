@@ -1,0 +1,409 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <link rel="canonical" href="http://setTheBaseURLInProjectSettings.com/index.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="../css/all.min.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/header.css">
+  <title>CSIR</title>
+
+  <style>
+    .card {
+      background-color: dodgerblue;
+      color: white;
+      padding: 1rem;
+      height: 4rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .cards {
+      margin: 15px auto;
+      display: grid;
+      grid-gap: 1rem;
+    }
+
+    /* Screen larger than 600px? 2 column */
+    @media (min-width: 600px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Screen larger than 900px? 3 columns */
+    @media (min-width: 900px) {
+      .cards {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .container {
+      max-width: 100%;
+    }
+
+    #table-form .form-group {
+      margin-bottom: 0;
+    }
+
+    .table td {
+      padding: 0 !important;
+    }
+
+    .table .sno {
+      padding: 0 !important;
+      text-align: center;
+    }
+
+    .modal-dialog {
+      max-width: 80%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Preloader -->
+  <div id="page-loading-blocs-notifaction" class="page-preloader"></div>
+  <div id="loading"></div>
+  <!-- Preloader END -->
+  <header id="header"></header>
+
+
+  <!-- bloc-1 -->
+  <section class="navigation1" id="navigation1" style="height: 34px;background: #1e398f;display: flex;justify-content: space-between;align-content: center;align-items: center;"></section>
+  <!-- bloc-1 END -->
+
+  <div style="margin: 1% 5% 0px 5%;min-height: 100vh;">
+    <!-- status -->
+
+    <!-- ststus end -->
+    <!-- table -->
+    <div class="container" style="border: 1px solid #ccc;border-radius: 3px;padding: 30px;">
+      <div style="padding: 0 0 10px 0;">
+        <h3>View Request Booking (Requisition slip for the use of staff car)</h3>
+      </div>
+      <div>
+        <button onclick="myprint()" class="btn btn-primary" id="btnprint">Print</button>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Requester Name : </label>
+          <span id="requester"></span>
+        </div>     
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Creation Date : </label><span id="cdtspan"></span>
+        </div> 
+      </div>
+      <form>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Name / नाम</label>
+            <input disabled="disabled" type="text" class="form-control" id="name_input" placeholder="Name">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Designation / पद</label>
+            <input disabled="disabled" type="text" class="form-control" id="designation_input"
+              placeholder="Designation">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Division / विभाजन</label>
+            <input disabled="disabled" type="text" class="form-control" id="division_input" placeholder="Division">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Mobile Number / मोबाइल नंबर</label>
+            <input type="text" disabled="disabled" class="form-control" maxlength="10" id="mobile_input" placeholder="Mobile no">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Extension Number / विस्तारण क्रमांक</label>
+            <input type="text" disabled="disabled" class="form-control" maxlength="4" id="extno" placeholder="Extension Number">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Purpose / उद्देश्य</label>
+            <input type="text" class="form-control" value="Official Purpose" disabled id="purpose_input" placeholder="Purpose">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Pickup / गंतव्य से</label>
+            <input type="text" disabled class="form-control" id="fdestination" placeholder="Pickup">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Drop / गंतव्य तक</label>
+            <input type="text" disabled class="form-control" id="tdestination" placeholder="Drop">
+          </div>         
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputState">Date / दिनांक</label>
+            <input disabled="disabled" type="text" class="form-control" id="date_input">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Time / समय</label>
+            <input disabled="disabled" type="text" class="form-control" id="to_time">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Till / तक</label>
+            <input disabled="disabled" type="text" class="form-control" id="till_time">
+          </div>
+        </div>
+
+        <div id="tableaddpickup" class="form-row" style="display:none;">
+          <table id="table-form" class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" rowspan="2">Name of Officer/Employee</th>
+                <th scope="col" rowspan="2">Designation</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyadd">
+             
+            </tbody>
+          </table>
+        </div>
+
+        <div id="flighttable" class="form-row" style="display:none;">
+          <table id="table-form" class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" rowspan="2">Name of Officer/Employee</th>
+                <th scope="col" rowspan="2">Designation of Officer/Employee</th>
+                <th scope="col" rowspan="2">Date of journey</th>
+                <th scope="col" colspan="2">Place of official meeting</th>
+                <th scope="col" rowspan="2">Time in hours for Reporting of Vehicle</th>
+                <th scope="col" rowspan="2">Flight No. / Train No.</th>
+                <!-- <th scope="col" rowspan="2">Action</th> -->
+              </tr>
+              <tr>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <!-- Button trigger modal -->
+          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+            Back
+          </button> -->
+        </div>
+      </form>
+
+      <hr>
+      <form id="status">
+        <div style="padding: 0 0 10px 0;">
+          <h3>Approve/Not Approve Booking (Requisition slip for the use of staff car)</h3>
+        </div>
+
+        <div class="form-row" >
+          <div id="statusdiv" class="form-group col-md-6">
+            <select id="selectStatus" class="form-control">
+              <option selected value="">Choose Status...</option>
+              <option value="Approved">Sancationed/Approved</option>
+              <option value="Not approved">Not Approved</option>
+            </select>
+          </div>
+          <div id="btndiv" class="form-group col-md-2">
+            <button type="button" id="updstatus" class="btn btn-primary" onclick="updatestatus()">
+              Update Status
+            </button>
+          </div>
+          <div class="form-group col-md-4">
+            <button type="button" class="btn" id="backbtn" style="background-color: lightgrey;" onclick="history.go(-1)">
+              Back
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- table end -->
+  </div>
+  <!-- ScrollToTop Button -->
+  <a class="bloc-button btn btn-d scrollToTop" onclick="scrollToTarget('1',this)"><svg
+      xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
+      <path class="scroll-to-top-btn-icon" d="M30,22.656l-14-13-14,13" />
+    </svg></a>
+  <!-- ScrollToTop Button END-->
+
+
+  </div>
+  <select id="designation_select" style="display: none;"></select>
+  <select id="division_select1" style="display: none;"></select>
+  <select id="division_select" style="display: none;"></select>
+  
+    </div>
+    <!-- Main container END -->
+    <script src="../js/common.js"></script>
+  <script src="../js/header.js"></script>
+  <script src="../js/index.js"></script>
+  
+  <!-- <script>
+  function print() {
+    //document.getElementById("navigation1").style = "display:none";
+    window.print();
+      
+  }
+  </script> -->
+
+  <script>
+    let req = new XMLHttpRequest();
+    req.open("GET", "http://localhost:8080/GetSanctioningRequest/" + sessionStorage.getItem("Id"), true);
+    req.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+    req.setRequestHeader('Access-Control-Allow-Origin', "*");
+    var data = {};
+    req.send();
+    req.onload = () => {
+      console.log("Request : " + req.status);
+      if (req.status == 200) {
+        const jsonData = JSON.parse(req.response);
+        const entry_module = jsonData.entry_module;
+
+        document.getElementById("name_input").value = entry_module.name;
+        document.getElementById("purpose_input").value = entry_module.purpose;
+        document.getElementById("fdestination").value = entry_module.from_destination;
+        document.getElementById("tdestination").value = entry_module.to_destination;
+        document.getElementById("mobile_input").value = entry_module.mobile;
+        document.getElementById("extno").value = entry_module.extension;
+        document.getElementById("designation_input").value = entry_module.designation_name;
+        document.getElementById("division_input").value = entry_module.division_name;
+        document.getElementById("date_input").value = entry_module.date;
+        document.getElementById("to_time").value = entry_module.to_time;
+        document.getElementById("till_time").value = entry_module.till_time;
+        document.getElementById("cdtspan").textContent = entry_module.cdt.split("T")[0];
+        if (entry_module.status != "Allocated" || entry_module.status != "Not allocated") {
+          document.getElementById("selectStatus").value = entry_module.status;
+        }
+        else {
+          document.getElementById("statusdiv").style.display = "none";
+          document.getElementById("btndiv").style.display = "none";
+        }
+
+
+        const multiple_entry = jsonData.multiple_entry;
+
+        var text = "";
+        var text1 = "";
+
+        for (let i = 0; i < multiple_entry.length; i++) {
+          if(multiple_entry[i].date == null || multiple_entry[i].date == "")
+          {
+            text += '<tr><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].officer_name + '">' 
+              + '</div></td><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].designation_name + '">'
+              + '</div></td></tr>';
+          }
+          else
+          {
+            text1 += '<tr><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].officer_name + '">'
+              + '</div></td><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].designation_name + '">'
+              + '</div></td><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].date + '">'
+              + '</div></td><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].from_time + '"></div>'
+              + '</td><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].to_time + '">'
+              + '</div></td><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].time + '">'
+              + '</div></td><td><div class="form-group"><input disabled="disabled"  type="text" class="form-control" value="' + multiple_entry[i].flight_no + '"></div></td></tr>';
+          }
+        }
+        console.log(text1)
+        if(text != "")
+        {
+          document.getElementById("tbodyadd").innerHTML = text;
+          document.getElementById("tableaddpickup").style.display = "block";
+        }
+        
+        if(text1 != ""){
+          document.getElementById("flighttable").style.display = "block";
+          document.getElementById("tbody").innerHTML = text1;
+        }
+
+      }
+      else {
+        window.location.href = "../index.html";
+      }
+    }
+
+    function updatestatus() {
+      var selectStatus = document.getElementById("selectStatus").value;
+      var xhr = new XMLHttpRequest();
+      xhr.open('PUT', 'http://localhost:8080/updateSanctionedRequest/' + sessionStorage.getItem("Id"), true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            console.log(xhr.responseText);
+            // let reponse = xhr.responseText;
+
+            if (xhr.responseText == 1) {
+              window.location.href = "dashboard.html"
+            }
+          }
+          else {
+            console.error(xhr.responseText);
+            window.location.href = "../index.html"
+          }
+        }
+      };
+      var data = { status: selectStatus };
+      xhr.send(JSON.stringify(data))
+    }
+  </script>
+
+  <!-- Additional JS -->
+  <!-- <script src="./js/jquery-3.5.1.js"></script>
+  <script src="./js/bootstrap.bundle.js"></script>
+  <script src="./js/blocs.js"></script> -->
+  <!-- Additional JS END -->
+  <script>
+    $(function () {
+      $(document).ready(function () {
+        $('#example').DataTable();
+      });
+    });
+  </script>
+</body>
+<script>
+  function myprint() {
+    document.getElementById("navigation1").style = "display:none";
+    document.getElementById("btnprint").style = "display:none";
+    document.getElementById("updstatus").style = "display:none";
+    document.getElementById("backbtn").style = "display:none";
+    if(document.getElementById("selectStatus").value == "")
+    {
+      document.getElementById("statusdiv").style.display = "none";
+    }
+    window.print();
+    location.reload();
+      
+  }
+  </script>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="canonical" href="http://setTheBaseURLInProjectSettings.com/index.html" />
+    <meta name="robots" content="index, follow" />
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="stylesheet" type="text/css" href="../css/all.min.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" type="text/css" href="../css/header.css">
+    <title>CSIR</title>
+
+    <style>
+        .card {
+            background-color: dodgerblue;
+            color: white;
+            padding: 1rem;
+            height: 4rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .cards {
+            margin: 15px auto;
+            display: grid;
+            grid-gap: 1rem;
+        }
+
+        /* Screen larger than 600px? 2 column */
+        @media (min-width: 600px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Screen larger than 900px? 3 columns */
+        @media (min-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .container {
+            max-width: 100%;
+        }
+
+        #table-form .form-group {
+            margin-bottom: 0;
+        }
+
+        .table td {
+            padding: 0 !important;
+        }
+
+        .table .sno {
+            padding: 0 !important;
+            text-align: center;
+        }
+
+        .modal-dialog {
+            max-width: 40%;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div id="page-loading-blocs-notifaction" class="page-preloader"></div>
+    <div id="loading"></div>
+    <!-- Preloader END -->
+    <header id="header"></header>
+
+    <!-- bloc-1 -->
+    <section class="navigation1" id="navigation1" style="height: 34px;background: #1e398f;display: flex;justify-content: space-between;align-content: center;align-items: center;"></section>
+    <!-- bloc-1 END -->
+
+    <div style="margin: 1% 5% 0px 5%;min-height: 100vh;">
+        <!-- status -->
+
+        <!-- ststus end -->
+        <!-- table -->
+        <div class="container" style="border: 1px solid #ccc;border-radius: 3px;padding: 30px;">
+            <div style="padding: 0 0 10px 0;">
+                <h3>Update User</h3>
+            </div>
+            <form>
+
+                <div class="form-group">
+                    <label for="inputEmail4">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword4">Email ID</label>
+                    <input type="text" class="form-control" id="emailid" placeholder="Enter Email ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword4">Role</label>
+                    <select class="form-control" id="role">
+                        <option value="ROLE_USER">User Role</option>
+                        <option value="ROLE_HOD">HOD Role</option>
+                        <option value="ROLE_TRANS">Transport Role</option>
+                        <option value="ROLE_ADMIN">Admin Role</option>
+                        </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword4">Status</label>
+                    <select class="form-control" id="status">
+                        <option value="active">Active</option>
+                        <option value="deactive">Deactive</option>
+                    </select>
+                </div>
+
+                <div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" onclick="Edit()">
+                        Update
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="history.go(-1)">
+                        Back
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- table end -->
+    </div>
+    <!-- ScrollToTop Button -->
+    <a class="bloc-button btn btn-d scrollToTop" onclick="scrollToTarget('1',this)"><svg
+            xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
+            <path class="scroll-to-top-btn-icon" d="M30,22.656l-14-13-14,13" />
+        </svg></a>
+    <!-- ScrollToTop Button END-->
+
+
+    </div>
+    <!-- Main container END -->
+
+
+    <script src="../js/header.js"></script>
+    <script src="../js/index.js"></script>
+
+    <script>
+    let request1 = new XMLHttpRequest();
+    request1.open("GET", "http://localhost:8080/UserData/"+sessionStorage.getItem("Id"), true);
+    request1.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+    request1.setRequestHeader('Access-Control-Allow-Origin', "*");
+    var data = {};
+    request1.send();
+    request1.onload = () => {
+      console.log("Request : " + request1.status);
+      if (request1.status == 200) {
+        const jsonData = JSON.parse(request1.response);
+
+        document.getElementById("name").value = jsonData.display_name;
+        document.getElementById("emailid").value = jsonData.email_id;
+        document.getElementById("role").value = jsonData.role;
+        document.getElementById("status").value = jsonData.status;
+      }
+      else {
+        window.location.href = "../index.html";
+      }
+    }
+        async function Edit()
+        {
+            console.log("************")
+            event.preventDefault()
+            const name = document.getElementById("name").value;
+            const emailid = document.getElementById("emailid").value;
+            const role = document.getElementById("role").value;
+            const status = document.getElementById("status").value;
+          
+            var xhr1 = new XMLHttpRequest();
+            xhr1.open('PUT', 'http://localhost:8080/EditUserData/'+sessionStorage.getItem("Id"), true);
+            xhr1.setRequestHeader('Content-Type', 'application/json');
+            xhr1.setRequestHeader('Authorization', 'Bearer '+sessionStorage.getItem("token"));
+            xhr1.setRequestHeader('Access-Control-Allow-Origin', "*");
+            xhr1.onreadystatechange = function() {
+                if(xhr1.readyState === XMLHttpRequest.DONE) {
+                    if(xhr1.status === 200) 
+                    {
+                        let reponse = xhr1.responseText;
+                        const myArray = reponse.split("|");
+                        console.log(myArray[0]+"|"+myArray[1])
+                        if(myArray[0] == "201")
+                        {
+                        messageReponse.textContent = myArray[1];
+                        messageReponse.style.color = "green"; 
+                        window.location = "user_list.html";
+                        }
+                        else
+                        {
+                        messageReponse.textContent = myArray[1];
+                        messageReponse.style.color = "red"; 
+                        }
+                    }
+                    else 
+                    {
+                        messageReponse.textContent = "** Something went wrong, please try after sometime";
+                        messageReponse.style.color = "red"; 
+                    }
+                }
+            };
+    
+            var data = {
+                display_name: name,
+                email_id: emailid,
+                role: role,
+                status: status
+            };
+        
+            xhr1.send(JSON.stringify(data))          
+        }
+        
+        </script>
+    <!-- Additional JS -->
+    <script src="./js/jquery-3.5.1.js"></script>
+    <script src="./js/bootstrap.bundle.js"></script>
+    <script src="./js/blocs.js"></script><!-- Additional JS END -->
+
+    <script type="text/javascript">
+       
+    </script>
+
+</body>
+
+</html>

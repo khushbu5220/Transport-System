@@ -1,0 +1,842 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <link rel="canonical" href="http://setTheBaseURLInProjectSettings.com/index.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="../css/all.min.css">
+
+  <script src="../js/model.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/header.css">
+    
+  <title>CSIR</title>
+
+  <style>
+    .container {
+      max-width: 100%;
+    }
+
+    #table-form .form-group {
+      margin-bottom: 0;
+    }
+
+    .table td {
+      padding: 0 !important;
+    }
+
+    .table .sno {
+      padding: 0 !important;
+      text-align: center;
+    }
+
+
+
+
+    /* The Modal (background) */
+    .modaal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 10px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modaal-content {
+      position: relative;
+      margin: auto;
+      padding: 0px;
+      width: 80%;
+      max-width: 80%;
+      max-height: 100%;
+      overflow-y: scroll;
+      border-radius: 2px;
+      -webkit-animation-name: animatetop;
+      -webkit-animation-duration: 0.4s;
+      animation-name: animatetop;
+      animation-duration: 0.4s;
+      font-family: "Open Sans", sans-serif;
+      background: #fff;
+      -webkit-box-shadow: 0px 0px 19px 3px rgba(0, 0, 0, 0.08);
+      -moz-box-shadow: 0px 0px 19px 3px rgba(0, 0, 0, 0.08);
+      box-shadow: 0px 0px 19px 3px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modaal-content-left,
+    .modaal-content-right {
+      flex: 0 1 auto;
+    }
+
+    .modaal-content-left {
+      flex: 2;
+    }
+
+    .modaal-content-left img {
+      width: 40rem;
+      max-width: 95%;
+      margin: 0;
+      padding: 0;
+      display: block;
+      border-radius: 2px;
+    }
+
+    .modaal-content-right {
+      flex: 2;
+      max-width: 100%;
+      padding: 1rem 3rem;
+    }
+
+    /* Add Animation */
+    @-webkit-keyframes animatetop {
+      from {
+        top: -300px;
+        opacity: 0;
+      }
+
+      to {
+        top: 0;
+        opacity: 1;
+      }
+    }
+
+    @keyframes animatetop {
+      from {
+        top: -300px;
+        opacity: 0;
+      }
+
+      to {
+        top: 0;
+        opacity: 1;
+      }
+    }
+
+    /* The Close Button */
+    .closse,
+    .closse-imp {
+      color: #aaa;
+      font-size: 2rem;
+      font-weight: bold;
+      padding: 0 1rem;
+      border-radius: 2px;
+      transition: 0.4s ease-out;
+    }
+
+    .closse:hover,
+    .closse:focus,
+    .closse-imp:hover,
+    .closse-imp:focus {
+      color: #111;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modaal-header {
+      display: flex;
+      justify-content: space-between;
+      font-family: "Patua One", cursive;
+      font-size: 3.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .modaal-header p {
+      margin: 0;
+      padding: 0;
+    }
+
+    .modaal-header,
+    .modaal-body,
+    .modaal-footer {
+      padding: 0.5rem 3rem;
+    }
+
+    .modaal-header {
+      padding-top: 2rem;
+    }
+
+    .modaal-footer {
+      padding-bottom: 2rem;
+    }
+  </style>
+  <script type="text/javascript">
+    window.onload=function(){
+      document.getElementById("date_input").min = new Date().toISOString().split("T")[0];
+    
+    }
+    
+  </script>
+</head>
+
+<body>
+
+  <!-- Preloader -->
+  <div id="page-loading-blocs-notifaction" class="page-preloader"></div>
+  <div id="loading"></div>
+  <!-- Preloader END -->
+  <header id="header"></header>
+  <!-- bloc-1 -->
+  <section class="navigation1" id="navigation1" style="height: 34px;background: #1e398f;display: flex;justify-content: space-between;align-content: center;align-items: center;"></section>
+  <!-- bloc-1 END -->
+
+  <div style="margin: 1% 5% 0px 5%;min-height: 100vh;">
+    <!-- status -->
+
+    <!-- ststus end -->
+    <!-- table -->
+    <div id="newBooking" class="container" style="border: 1px solid #ccc;border-radius: 3px;padding: 30px;">
+      <div style="padding: 0 0 10px 0;">
+        <h3>New Booking (Requisition Slip For The Use Of Staff Car)</h3>
+      </div>
+      <div><span id="messageReponse"></span></div>
+      <form>
+        <div style="display: none;"><input value="0" id="id_input"></div>
+        
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Requested By <span id="requester">________</span></label>
+          </div>         
+        </div>
+
+        <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputEmail4">Name / नाम</label>
+          <input type="text" class="form-control" id="name_input" placeholder="Name">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputState">Designation / पद</label>
+          <select id="designation_select" class="form-control"></select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputState">Division / विभाजन</label>
+          <select id="division_select" class="form-control"></select>
+        </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Mobile Number / मोबाइल नंबर</label>
+            <input type="number" class="form-control" max="9999999999" onkeypress="if (this.value.length > 9) return false;" id="mobile_input" placeholder="Mobile no">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Extension Number / विस्तारण क्रमांक</label>
+            <input type="number" class="form-control" max="9999" onkeypress="if (this.value.length > 3) return false;" id="extno" placeholder="Extension Number">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputPassword4">Purpose / उद्देश्य</label>
+            <input type="text" class="form-control" value="Official Purpose" disabled id="purpose_input" placeholder="Purpose">
+          </div>         
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Pickup / गंतव्य से</label>
+            <input type="text" class="form-control" id="fdestination" placeholder="Pickup">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Drop / गंतव्य तक</label>
+            <input type="text" class="form-control" id="tdestination" placeholder="Drop">
+          </div>         
+        </div>
+
+        <!-- <div class="form-row">         
+          <div class="form-group col-md-6">
+            <label for="inputState">Division / विभाजन</label>
+            <select id="division_select" class="form-control"></select>
+          </div>
+        </div> -->
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputState">Date / दिनांक</label>
+            <input type="date" class="form-control" id="date_input">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Time / समय</label>
+            <input type="time" class="form-control" id="to_time">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Till / तक</label>
+            <input type="time" class="form-control" id="till_time">
+          </div>
+        </div>
+
+        <br>
+        <div>
+          <span>To Add more person in same car (click on Add More).</span>
+          <button type="button" class="btn btn-primary" onclick="addmore()" style="margin-inline: 20px;"> + Add More</button>
+        </div>
+        <br>
+        <div>
+          <span>In Case Pickup/Drop point is from Airport/Railway (click here).</span>
+          <button type="button" class="btn btn-primary" onclick="addpickup()" style="margin-inline: 20px;"> + Add </button>
+        </div>
+        <br>
+
+        <div id="tableaddpickup" class="form-row" style="display:none;">
+          <table id="table-form" class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" rowspan="2">Name of Officer/Employee</th>
+                <th scope="col" rowspan="2">Designation</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyadd">
+              <tr id="tradd">
+                <td>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="nof1">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="des1">
+                  </div>
+                </td>               
+                <td>
+                  <div class="form-group">
+                    <button type="button" id="1" onclick="deleteRowPick(this.id)" class="btn btn-danger">X</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot id="tfoot">
+              <tr>
+                <td colspan="8" style="border: solid white;">
+                  <button type="button" id="addrowbtn1" onclick="addRowPick()" class="btn addrowbtn"
+                    style="background-color: green; color: white;">+</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+
+        <div id="tabledata" class="form-row" style="display:none;">
+          <table id="table-form" class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" rowspan="2">Name of Officer/Employee</th>
+                <th scope="col" rowspan="2">Designation of Officer/Employee</th>
+                <th scope="col" rowspan="2">Date of journey</th>
+                <th scope="col" colspan="2">Place (of Pickup/ Drop)</th>
+                <th scope="col" rowspan="2">Time in hours <br>for Reporting of Vehicle</th>
+                <th scope="col" rowspan="2">Flight No. / Train No.</th>
+              </tr>
+              <tr>
+                <th scope="col">Pickup</th>
+                <th scope="col">Drop</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <tr id="tr1">
+                <td>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="name1">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="desig1">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="date" name="date" class="form-control" id="doj1">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="from1">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="to1">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="time" class="form-control" id="time1">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="flight1">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <button type="button" id="d1" onclick="deleteRow(this.id)" class="btn btn-danger">X</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot id="tfoot">
+              <tr>
+                <td colspan="8" style="border: solid white;">
+                  <button type="button" id="addrowbtn2" onclick="addRow()" class="btn addrowbtn"
+                    style="background-color: green; color: white;">+</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="actionbtndiv" style="display: flex; justify-content: center;">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" onclick="savebtn()" style="margin-inline: 20px;">
+            Save
+          </button>
+          <button type="button" class="btn" style="background-color: lightgrey;" onclick="history.go(-1)">
+            Back
+          </button>
+          <!-- Trigger/Open The Modal -->
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- table end -->
+  <select id="division_select1" style="display: none;"></select>
+  </div>
+  <!-- ScrollToTop Button -->
+  <a class="bloc-button btn btn-d scrollToTop" onclick="scrollToTarget('1',this)"><svg
+      xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
+      <path class="scroll-to-top-btn-icon" d="M30,22.656l-14-13-14,13" />
+    </svg></a>
+  <!-- ScrollToTop Button END-->
+
+
+  </div>
+  <!-- Main container END -->
+
+  <!-- Modal -->
+
+  <!-- The Modal -->
+  <div id="myModal" class="modaal">
+    <!-- Modal content -->
+    <div class="modaal-content">
+
+      <div class="modaal-content-right">
+
+        <div class="modaal-header">
+          <h3>Confirm Before You Submit.</h3>
+          <span id="closse">&times;</span>
+        </div>
+        <hr>
+
+        <div class="modaal-body">
+          <div id="modalbooking"></div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" onclick="submitbtn()"
+            style="margin-inline: 20px;">Submit</button>
+          <button type="button" id="clossse" class="btn" style="background-color: lightgrey;">
+            Back
+          </button>
+          <!-- Trigger/Open The Modal -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END the modal -->
+  </div>
+
+  <script src="../js/header.js"></script>
+  <script>
+    // Get the modal
+    
+    var modaal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btnmodeel = document.getElementById("btnopenmodel");
+
+    // Get the <span> element that closes the modal
+    var closeModaal = document.getElementById("closse");
+    var backModal = document.getElementById("clossse");
+
+    // When the user clicks the button, open the modal
+    // btnmodeel.onclick = function () {
+    //   modaal.style.display = "block";
+    // };
+
+    // When the user clicks on <span> (x), close the modal
+    closeModaal.onclick = function () {
+      modaal.style.display = "none";
+    };
+    backModal.onclick = function () {
+      modaal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modaal) {
+        modaal.style.display = "none";
+      }
+    };
+  </script>
+
+  <script>
+    
+    i = 1;
+    z = 1;
+    function addRow() {
+      var table = document.getElementById('tbody');
+      var row = table.insertRow(-1);
+      var nameCell = row.insertCell(0);
+      var desigCell = row.insertCell(1);
+      var rollNoCell = row.insertCell(2);
+      var fromCell = row.insertCell(3);
+      var toCell = row.insertCell(4);
+      var timeCell = row.insertCell(5);
+      var flightCell = row.insertCell(6);
+
+      var deleteCell = row.insertCell(7);
+
+      nameCell.innerHTML = "<div class='form-group'><input type='text' class='form-control' id='name" + (i + 1) + "'></div>";
+      desigCell.innerHTML = "<div class='form-group'><input type='text' class='form-control' id='desig" + (i + 1) + "'></div>";
+      rollNoCell.innerHTML = "<div class='form-group'><input type='date' name='date' class='form-control' id='doj" + (i + 1) + "'></div>";
+      fromCell.innerHTML = "<div class='form-group'><input type='text' class='form-control' id='from" + (i + 1) + "'></div>";
+      toCell.innerHTML = "<div class='form-group'><input type='text' class='form-control' id='to" + (i + 1) + "'></div>";
+      timeCell.innerHTML = "<div class='form-group'><input type='time' class='form-control' id='time" + (i + 1) + "'></div>";
+      flightCell.innerHTML = "<div class='form-group'><input type='text' class='form-control' id='flight" + (i + 1) + "'></div>";
+      deleteCell.innerHTML = "<div class='form-group'><button type='button' onclick='deleteRow(this)' class='btn btn-danger'>X</button></div>";
+      setMinDate();
+      i++;
+    }
+    function deleteRow(button) {
+      var row = button.parentNode.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+   
+    setMinDate();
+    function setMinDate(){
+      const mindate = document.getElementsByName("date");
+      for(const md of mindate)
+      {
+        md.min = new Date().toISOString().split("T")[0];
+      }
+    }
+
+    function addRowPick() {
+      var table = document.getElementById('tbodyadd');
+      var row = table.insertRow(-1);
+      var name1Cell = row.insertCell(0);
+      var rollNo1Cell = row.insertCell(1);
+
+      var deleteCell = row.insertCell(2);
+
+      name1Cell.innerHTML = "<div class='form-group'><input type='text' class='form-control' id='nof" + (z + 1) + "'></div>";
+      rollNo1Cell.innerHTML = "<div class='form-group'><input type='text' class='form-control' id='des" + (z + 1) + "'></div>";
+      deleteCell.innerHTML = "<div class='form-group'><button type='button' onclick='deleteRowPick(this)' class='btn btn-danger'>X</button></div>";
+
+      z++;
+    }
+    function deleteRowPick(button) {
+      var row = button.parentNode.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+
+    function savebtn() {
+      const id = document.getElementById("id_input");
+      const name = document.getElementById("name_input").value;
+      const designation_name = document.getElementById("designation_select").value;
+      const division_name = document.getElementById("division_select").value;
+      const purpose = document.getElementById("purpose_input").value;
+      const fdestination = document.getElementById("fdestination").value;
+      const tdestination = document.getElementById("tdestination").value;
+      const mobile = document.getElementById("mobile_input").value;
+      const extension = document.getElementById("extno").value;
+      const date = document.getElementById("date_input").value;
+      const to_time = document.getElementById("to_time").value;
+      const till_time = document.getElementById("till_time").value;
+      var formatDate = new Date(date);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:8080/saveEntryModuleForm', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            console.log(xhr.responseText);
+            let reponse = xhr.responseText;
+            const myArray = reponse.split("|");
+            console.log(myArray[0] + "|" + myArray[1] + "|" + myArray[2])
+            if (myArray[0] == "201") {
+              id.value = myArray[2];
+
+              var newBooking = document.getElementById("newBooking");
+              document.getElementById("myModal").style.display = "block";
+              document.getElementById("modalbooking").innerHTML = "";
+              const copycontainer = $('#newBooking').clone();
+              $(copycontainer).children().appendTo("#modalbooking");
+
+              dodisplayNone();
+              const inputs = document.getElementById("modalbooking").getElementsByTagName("input");
+              for (const input of inputs) {
+                input.disabled = true
+              }
+              const selects = document.getElementById("modalbooking").getElementsByTagName("select");
+              const bselects = newBooking.getElementsByTagName("select");
+              let j = 0;
+              for (const select of selects) {
+                select.disabled = true;
+                select.selectedIndex = bselects[j].selectedIndex;
+                j++;
+              }
+            }
+            else {
+              const messageReponse = document.getElementById("messageReponse");
+              messageReponse.textContent = "** Something went wrong, please try after sometime";
+              messageReponse.style.color = "red";
+              console.error(xhr.responseText);
+            }
+          }
+          else {
+            console.error(xhr.responseText);
+            window.location.href = "../index.html"
+          }
+        }
+      };
+
+      data = {
+        entry_module: {
+          id: id.value,
+          name: name,
+          designation_name: designation_name,
+          division_name: division_name,
+          purpose: purpose,
+          from_destination:fdestination,
+          to_destination: tdestination,
+          extension: extension,
+          mobile: mobile,
+          date: formatDate.toLocaleString('default', { day: '2-digit' }) + '-' + formatDate.toLocaleString('default', { month: '2-digit' }) + '-' + formatDate.toLocaleString('default', { year: 'numeric' }),
+          to_time: to_time,
+          till_time: till_time
+        },
+        multiple_entry: []
+      };
+
+      if (document.getElementById("name1").value != "" || document.getElementById("doj1").value != "" || document.getElementById("from1").value != "" || document.getElementById("to1").value != "" || document.getElementById("time1").value != "") {
+        for (j = 1; j <= i; j++) {
+          if (document.getElementById("name" + j) != null) {
+            const nameCell = document.getElementById("name" + j).value;
+            const desig = document.getElementById("desig"+j).value;
+            const dojCell = document.getElementById("doj" + j).value;
+            const fromCell = document.getElementById("from" + j).value;
+            const toCell = document.getElementById("to" + j).value;
+            const timeCell = document.getElementById("time" + j).value;
+            const flightCell = document.getElementById("flight" + j).value;
+            var formatDate = new Date(dojCell);
+            entry = {}
+              entry.officer_name = nameCell,
+              entry.designation_name = desig,
+              entry.date = formatDate.toLocaleString('default', { day: '2-digit' }) + '-' + formatDate.toLocaleString('default', { month: '2-digit' }) + '-' + formatDate.toLocaleString('default', { year: 'numeric' }),
+              entry.from_time = fromCell,
+              entry.to_time = toCell,
+              entry.time = timeCell,
+              entry.flight_no = flightCell
+              data.multiple_entry.push(entry);
+          }
+        }
+      }
+
+      if(document.getElementById("nof1").value != "")
+      {
+        for(j = 1; j <= z; j++){
+          const nof = document.getElementById("nof"+j).value;
+          const des = document.getElementById("des"+j).value;
+          entry= {}
+          entry.officer_name = nof,
+          entry.designation_name = des
+          data.multiple_entry.push(entry);
+        }
+      }
+
+      xhr.send(JSON.stringify(data))
+    }
+  </script>
+
+  <script>
+    function dodisplayNone() {
+      const addbtn = document.getElementsByClassName("addrowbtn");
+      for (let i = 1; i <= (addbtn.length - 1); i++) {
+        addbtn[i].style.display = "none";
+      }
+      const delbtn = document.getElementsByClassName("btn-danger");
+      for (let i = (delbtn.length / 2); i <= (delbtn.length - 1); i++) {
+        delbtn[i].style.display = "none";
+      }
+      const actionbtn = document.getElementsByClassName("actionbtndiv");
+      for (let i = 1; i <= (actionbtn.length - 1); i++) {
+        actionbtn[i].style.display = "none";
+      }
+    }
+
+    function submitbtn() {
+      const id = document.getElementById("id_input").value;
+      var sxhr = new XMLHttpRequest();
+      sxhr.open('PUT', 'http://localhost:8080/SubmitEntryModuleData/' + id, true);
+      sxhr.setRequestHeader('Content-Type', 'application/json');
+      sxhr.setRequestHeader('Access-Control-Allow-Origin', "*");
+      sxhr.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+      sxhr.onreadystatechange = function () {
+        if (sxhr.readyState === XMLHttpRequest.DONE) {
+          if (sxhr.status === 200) {
+            console.log(sxhr.responseText);
+            let reponse = sxhr.responseText;
+            const myArray = reponse.split("|");
+            console.log(myArray[0] + "|" + myArray[1])
+            if (myArray[0] == "200") {
+              window.location.href = "my_booking.html"
+            }
+          }
+          else {
+            console.error(sxhr.responseText);
+            window.location.href = "../index.html"
+          }
+        }
+      };
+      var data1 = {};
+      sxhr.send(JSON.stringify(data1))
+    }
+  </script>
+ <script src="../js/common.js"></script>
+ <script>div();</script>
+  <script src="../js/index.js"></script>
+ 
+  <!-- Additional JS -->
+  <!-- <script src="./js/jquery-3.5.1.js"></script>
+  <script src="./js/bootstrap.bundle.js"></script>
+  <script src="./js/blocs.js"></script> -->
+  <!-- Additional JS END -->
+
+
+
+  <script>
+       
+    $(function () {
+      $(document).ready(function () {
+        $('#example').DataTable();
+      });
+    });
+  </script>
+
+  <script>
+    function addmore(){  
+      
+      var name1 = document.getElementById("name1").value;
+      var desig1 = document.getElementById("desig1").value;
+      var doj1 = document.getElementById("doj1").value;
+      var from1 = document.getElementById("from1").value;
+      var to1 = document.getElementById("to1").value;
+      var time1 = document.getElementById("time1").value;
+      var flight1 = document.getElementById("flight1").value;
+
+      var xyz = document.getElementById("tabledata"); 
+      var x = document.getElementById("tableaddpickup");
+        if(x.style.display==="none"){
+          if (name1 === "" && desig1 === "" && doj1 === "" && from1 === "" && to1 === "" && time1 === "" && flight1 === "" ) {
+              alert("BLOCK ADDMORE");
+              x.style.display="block";
+              if(xyz.style.display==="block"){       
+              // alert("emptyxxyz");
+              xyz.style.display="none";
+            } 
+          }
+          else{
+            alert("clear data from second table");
+          }
+        }
+        else{
+              alert("empty1");
+              x.style.display="none";
+          }
+
+       
+
+            
+        // if(xyz.style.display==="block"){       
+        //       alert("emptyxxyz");
+        //       xyz.style.display="none";
+        //   }       
+    }
+
+
+    function addpickup(){
+
+      var nof1 = document.getElementById("nof1").value;
+      var des1 = document.getElementById("des1").value;
+      
+      var xy = document.getElementById("tableaddpickup");
+      var x = document.getElementById("tabledata");
+        if(x.style.display==="none"){
+          if (nof1 === ""  &&  des1 === "" ) {
+            alert("BLOCK PICKUP");
+            x.style.display="block";
+              if(xy.style.display==="block"){        
+              xy.style.display="none";
+              }
+          }
+          else{
+            alert("clear data from first table");
+            // x.style.display="none";
+            // xy.style.display="block"
+          }
+        
+        }
+        else{
+          // if (nof1 === "" || nof1 == null || des1 === "" || des1 == null) {
+          alert("empty3");
+          x.style.display="none";
+          // }          
+      }
+      
+
+      
+      // if(xy.style.display==="block"){        
+      //     xy.style.display="none";
+      // }
+    }
+
+  </script>
+  
+</body>
+
+</html>

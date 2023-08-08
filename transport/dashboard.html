@@ -1,0 +1,360 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <link rel="canonical" href="http://setTheBaseURLInProjectSettings.com/index.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="../css/all.min.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/header.css">
+  <title>CSIR</title>
+
+  <style>
+    .card {
+      background-color: dodgerblue;
+      color: white;
+      padding: 1rem;
+      height: 4rem;
+      display: flex;
+      flex-direction: row;  cursor: pointer;
+      justify-content: space-between;
+    }
+
+    .cards {
+      margin: 15px auto;
+      display: grid;
+      grid-gap: 1rem;
+    }
+
+    /* Screen larger than 600px? 2 column */
+    @media (min-width: 600px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Screen larger than 900px? 3 columns */
+    @media (min-width: 900px) {
+      .cards {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .container {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Preloader -->
+  <div id="page-loading-blocs-notifaction" class="page-preloader"></div>
+  <div id="loading"></div>
+  <!-- Preloader END -->
+  <header id="header"></header>
+  <span id="requester" style="display: none;"></span>
+  <!-- bloc-1 -->
+  <section class="navigation1" id="navigation1" style="height: 34px;background: #1e398f;display: flex;justify-content: space-between;align-content: center;align-items: center;"></section>
+  <!-- bloc-1 END -->
+
+  <div style="margin: 0 5% 0px 5%;    min-height: 100vh;">
+    <!-- status -->
+    <div class="cards">
+      <div class="card" onclick="loadData()">Total <b id="total"> </b></div>
+      <div class="card" id="pending_div" style="background-color: lightcoral;" onclick="pendingListFunc()">Pending <b id="pending"> </b></div>
+      <div class="card" id="approved_div" style="background-color: rgb(78, 180, 121);" onclick="approvedListFunc()">Approved <b id="approved"> </b></div>
+      <div class="card" onclick="location.href='../booking/new_booking.html'"
+        style="background-color: rgb(65, 190, 228);">Book New (For Myself) <b>&#x21e8;</b></div>
+    </div>
+    <!-- ststus end -->
+    <!-- table -->
+    <div class="container" style="border: 1px solid #ccc;border-radius: 3px;">
+      <div style="padding: 10px 0 10px 0;">
+        <h3>Pending Allocation Request (Requisition slip for the use of staff car)</h3>
+      </div>
+      <div>
+        <div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="inputEmail4">Division</label>
+              <select id="division_select1" class="form-control"></select>
+              <select id="division_select" style="display: none;"></select>
+            </div>
+            <input id="name_input" style="display: none;">
+            <select name="" id="designation_select" style="display: none;"></select>
+            <div class="form-group col-md-3">
+              <label for="inputPassword4">From Date</label>
+              <input type="date" class="form-control" id="fromDate" placeholder="dd/mm/yyyy">
+            </div>
+              <div class="form-group col-md-3">
+                <label for="inputEmail4">Upto Date</label>
+                <input type="date" class="form-control" id="uptoDate" placeholder="dd/mm/yyyy">
+              </div>
+              <div class="form-group col-md-3" style="display: grid;">
+                <label for="inputEmail4" style="margin-bottom: 2rem;"></label>
+                <button type="button" id="searchbtn" class="btn btn-primary" onclick="Searchbtn()">
+                  Search
+                </button>
+              </div>
+        </div>
+      </div>
+      </div>
+      <div class="">
+        <div class="">
+          <div class="">
+            <div class="bg-white rounded">
+              <div class="table-responsive">
+                <table id="example" style="width:100%" class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Name</th>
+                      <th>Designation</th>
+                      <th>Division</th>
+                      <th>Mobile Number</th>
+                      <th>Extension Number</th>
+                      <th>Purpose</th>
+                      <th>From Destination</th>
+                      <th>To Destination</th>
+                      <th>Date</th>
+                      <th>To Time</th>
+                      <th>Till Time</th>
+                      <th>Creation Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table end -->
+  </div>
+  <!-- ScrollToTop Button -->
+  <a class="bloc-button btn btn-d scrollToTop" onclick="scrollToTarget('1',this)"><svg
+      xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
+      <path class="scroll-to-top-btn-icon" d="M30,22.656l-14-13-14,13" />
+    </svg></a>
+  <!-- ScrollToTop Button END-->
+
+
+  </div>
+  <!-- Main container END -->
+  <script src="../js/common.js"></script>
+  <script src="../js/header.js"></script>
+  <script src="../js/index.js"></script>
+  <script>
+loadData();
+    function loadData(){
+    let req = new XMLHttpRequest();
+    req.open("GET", "http://localhost:8080/GetTransportationRequest", true);
+    req.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+    req.setRequestHeader('Access-Control-Allow-Origin', "*");
+    var data = {};
+    req.send();
+    req.onload = () => {
+      console.log("Request : " + req.status);
+      if (req.status == 200) {
+        const jsonData = JSON.parse(req.response);
+        console.log("jsonData : " + jsonData);
+        const entrySanctioned = jsonData.entry_module;
+        var text = "";
+        for (let i = 0; i < entrySanctioned.length; i++) {
+          const myArray = entrySanctioned[i].cdt.split("T");
+          text += "<tr><td>" + (i + 1) + "</td><td>" + entrySanctioned[i].name + "</td><td>" + entrySanctioned[i].designation_name
+            + "</td><td>" + entrySanctioned[i].division_name + "</td><td>" + entrySanctioned[i].mobile + "</td><td>" + entrySanctioned[i].extension + "</td><td>"
+            + entrySanctioned[i].purpose + "</td><td>" + entrySanctioned[i].from_destination + "</td><td>" + entrySanctioned[i].to_destination + "</td>"
+            +"<td>" + entrySanctioned[i].date + "</td><td>" + entrySanctioned[i].to_time + "</td>"
+            + "<td>" + entrySanctioned[i].till_time + "</td><td>"+myArray[0]+"</td><td>" + entrySanctioned[i].status + "</td>"
+            + "<td><button id='" + entrySanctioned[i].id + "'  class='btn btn-primary' onclick='viewfunc(this.id)'>View</button>"
+            + "</td></tr>";
+        }
+        console.log(text)
+        document.getElementById("total").innerText = jsonData.tot_booking;
+        document.getElementById("pending").innerText = jsonData.pending_booking;
+        document.getElementById("approved").innerText = jsonData.approved_booking;
+        // document.getElementById("allocated").innerText = jsonData.allocated_booking;
+        document.getElementById("tbody").innerHTML = text;
+        document.getElementById("pending_div").style.backgroundColor = "lightcoral";
+            document.getElementById("approved_div").style.backgroundColor = "rgb(78, 180, 121)";
+      }
+      else {
+        window.location.href = "../index.html";
+      }
+    }
+  }
+
+    function viewfunc(id) {
+      sessionStorage.setItem("Id", id);
+      window.location.href = "view_request.html";
+    }
+</script>
+<script>
+    function Searchbtn()
+    {
+      const division_name = document.getElementById("division_select").value;
+      console.log("division_name : "+division_name)
+      const from_date = document.getElementById("fromDate").value;
+      const to_date = document.getElementById("uptoDate").value;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:8080/filterData', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('Access-Control-Allow-Origin', "*");
+      xhr.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+
+          if (xhr.status === 200) {
+            console.log(xhr.response);
+            // let response = xhr.response;
+            const jsonData = JSON.parse(xhr.response);
+            console.log("jsonData : " + jsonData);
+            const entrySanctioned = jsonData.entry_module;
+            var text = "";
+            for (let i = 0; i < entrySanctioned.length; i++) {
+              const myArray = entrySanctioned[i].cdt.split("T");
+              text += "<tr><td>" + (i + 1) + "</td><td>" + entrySanctioned[i].name + "</td><td>" + entrySanctioned[i].designation_name
+                + "</td><td>" + entrySanctioned[i].division_name + "</td><td>" + entrySanctioned[i].mobile + "</td><td>" + entrySanctioned[i].extension + "</td><td>"
+                + entrySanctioned[i].purpose + "</td><td>" + entrySanctioned[i].from_destination + "</td><td>" + entrySanctioned[i].to_destination + "</td>"
+                +"<td>" + entrySanctioned[i].date + "</td><td>" + entrySanctioned[i].to_time + "</td>"
+                + "<td>" + entrySanctioned[i].till_time + "</td><td>"+myArray[0]+"</td><td>" + entrySanctioned[i].status + "</td>"
+                + "<td><button id='" + entrySanctioned[i].id + "'  class='btn btn-primary' onclick='viewfunc(this.id)'>View</button>"
+                + "</td></tr>";
+            }
+            console.log(text)
+            document.getElementById("total").innerText = jsonData.tot_booking;
+            document.getElementById("pending").innerText = jsonData.pending_booking;
+            document.getElementById("approved").innerText = jsonData.approved_booking;
+            // document.getElementById("allocated").innerText = jsonData.allocated_booking;
+            document.getElementById("tbody").innerHTML = text;
+            
+          }
+          else {
+            console.error(xhr.responseText);
+            window.location.href = "../index.html"
+          }
+        }
+      };
+      var fromDate = new Date(from_date);
+      var toDate = new Date(to_date);
+      var data = { division: division_name,
+        from_date: from_date,
+        to_date: to_date
+      };
+      xhr.send(JSON.stringify(data))
+    }
+    
+    function pendingListFunc() 
+    {
+      let request = new XMLHttpRequest();
+      request.open("GET", "http://localhost:8080/ViewEntryModuleList/transport_pending_request", true);
+      request.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+      request.setRequestHeader('Access-Control-Allow-Origin', "*");
+      var data = {};
+      request.send();
+      request.onload = () => {
+        console.log("Request : " + request.status);
+        if (request.status == 200) {
+          const entryData = JSON.parse(request.response);
+          // console.log("jsonData : " + jsonData);
+          // const entryData = jsonData.entry_module;
+          var text = "";
+          for (let i = 0; i < entryData.length; i++) {
+            const myArray = entryData[i].cdt.split("T");
+            text += "<tr><td>" + (i + 1) + "</td><td>" + entryData[i].name + "</td><td>" + entryData[i].designation_name
+              + "</td><td>" + entryData[i].division_name + "</td><td>" + entryData[i].mobile + "</td><td>" + entryData[i].extension + "</td><td>"
+              + entryData[i].purpose + "</td><td>" + entryData[i].from_destination + "</td><td>" + entryData[i].to_destination + "</td>"
+              +"<td>" + entryData[i].date + "</td><td>" + entryData[i].to_time + "</td>"
+              + "<td>" + entryData[i].till_time + "</td><td class='cdt'>" + myArray[0] + "</td><td>" + entryData[i].status + "</td>"
+              + "<td class='actions'><button id='" + entryData[i].id + "'  class='btn btn-primary' onclick='viewfunc(this.id)'>View</button>"
+              + "</td></tr>";
+          }
+          console.log(text)
+          document.getElementById("tbody").innerHTML = text;
+          document.getElementById("pending_div").style.backgroundColor = "#aaaaaa";
+          document.getElementById("approved_div").style.backgroundColor = "rgb(78, 180, 121)";
+          // document.getElementById("allocated_div").style.backgroundColor = "rgb(65, 190, 228)";
+          // document.getElementById("pending_div").style.backgroundColor
+        }
+        else {
+          window.location.href = "../index.html";
+        }
+      }
+    } 
+
+    function approvedListFunc() 
+    {
+      let request = new XMLHttpRequest();
+      request.open("GET", "http://localhost:8080/ViewEntryModuleList/transport_approved_request", true);
+      request.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+      request.setRequestHeader('Access-Control-Allow-Origin', "*");
+      var data = {};
+      request.send();
+      request.onload = () => {
+        console.log("Request : " + request.status);
+        if (request.status == 200) {
+          const entryData = JSON.parse(request.response);
+          // console.log("jsonData : " + jsonData);
+          // const entryData = jsonData.entry_module;
+          var text = "";
+          for (let i = 0; i < entryData.length; i++) {
+            const myArray = entryData[i].cdt.split("T");
+            text += "<tr><td>" + (i + 1) + "</td><td>" + entryData[i].name + "</td><td>" + entryData[i].designation_name
+              + "</td><td>" + entryData[i].division_name + "</td><td>" + entryData[i].mobile + "</td><td>" + entryData[i].extension + "</td><td>"
+              + entryData[i].purpose + "</td><td>" + entryData[i].from_destination + "</td><td>" + entryData[i].to_destination + "</td>"
+              +"<td>" + entryData[i].date + "</td><td>" + entryData[i].to_time + "</td>"
+              + "<td>" + entryData[i].till_time + "</td><td class='cdt'>" + myArray[0] + "</td><td>" + entryData[i].status + "</td>"
+              + "<td class='actions'><button id='" + entryData[i].id + "'  class='btn btn-primary' onclick='viewfunc(this.id)'>View</button>"
+              + "</td></tr>";
+          }
+          console.log(text)
+          document.getElementById("tbody").innerHTML = text;
+          document.getElementById("pending_div").style.backgroundColor = "lightcoral";
+          document.getElementById("approved_div").style.backgroundColor = "#aaaaaa";
+          // document.getElementById("allocated_div").style.backgroundColor = "rgb(65, 190, 228)";
+          // document.getElementById("pending_div").style.backgroundColor
+        }
+        else {
+          window.location.href = "../index.html";
+        }
+      }
+    } 
+  </script>
+
+  <!-- Additional JS -->
+  <!-- <script src="./js/jquery-3.5.1.js"></script> -->
+  <!-- <script src="./js/bootstrap.bundle.js"></script>
+  <script src="./js/blocs.js"></script>Additional JS END -->
+  <script>
+    $(function () {
+      $(document).ready(function () {
+        $('#example').DataTable();
+      });
+    });
+  </script>
+</body>
+
+</html>

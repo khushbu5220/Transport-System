@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <link rel="canonical" href="http://setTheBaseURLInProjectSettings.com/index.html" />
+  <meta name="robots" content="index, follow" />
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="../css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../css/header.css">
+
+  <title>CSIR</title>
+
+  <style>
+    .card {
+      background-color: dodgerblue;
+      color: white;
+      padding: 1rem;
+      height: 4rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .cards {
+      margin: 15px auto;
+      display: grid;
+      grid-gap: 1rem;
+    }
+
+    /* Screen larger than 600px? 2 column */
+    @media (min-width: 600px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Screen larger than 900px? 3 columns */
+    @media (min-width: 900px) {
+      .cards {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .container {
+      max-width: 100%;
+    }
+    /* ----------------------------------------------------- */
+
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Preloader -->
+  <div id="page-loading-blocs-notifaction" class="page-preloader"></div>
+  <div id="loading"></div>
+  <!-- Preloader END -->
+  <header id="header"></header>
+
+  <!-- bloc-1 -->
+  <section class="navigation1" id="navigation1" style="height: 34px;background: #1e398f;display: flex;justify-content: space-between;align-content: center;align-items: center;"></section>
+
+  <!-- <nav style="height:35px;background-color: #0068b1;"></nav> -->
+  <!-- bloc-1 END -->
+
+  <div id="screen1" style="min-height: 100vh;">
+    <!-- status -->
+    <div class="cards">
+      <div class="card">Total <b> 10</b></div>
+      <div class="card" style="background-color: lightcoral;">Pending <b> 6</b></div>
+      <div class="card" style="background-color: rgb(78, 180, 121);">Approved <b> 4</b></div>
+      <div class="card" onclick="location.href='../booking/new_booking.html'"
+        style="background-color: rgb(65, 190, 228);">Book New <b>&#x21e8;</b></div>
+    </div>
+    <!-- ststus end -->
+    <!-- table -->
+    <div class="container" style="border: 1px solid #ccc;border-radius: 3px;">
+      <div style="padding: 10px 0 10px 0;">
+        <h3>My Booking (Requisition slip for the use of staff car)</h3>
+      </div>
+      <div class="">
+        <div class="">
+          <div class="">
+            <div class="bg-white rounded">
+              <div class="table-responsive">
+                <table id="example" style="width:100%" class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Name</th>
+                      <th>Designation</th>
+                      <th>Division</th>
+                      <th>Mobile</th>
+                      <th>Purpose</th>
+                      <th>Date</th>
+                      <th>To Time</th>
+                      <th>Till Time</th>
+                      <th>Creation Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbody">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table end -->
+  </div>
+  <!-- ScrollToTop Button -->
+  <a class="bloc-button btn btn-d scrollToTop" onclick="scrollToTarget('1',this)"><svg
+      xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
+      <path class="scroll-to-top-btn-icon" d="M30,22.656l-14-13-14,13" />
+    </svg></a>
+  <!-- ScrollToTop Button END-->
+
+  </div>
+
+
+  <script src="../js/header.js"></script>
+  <!-- Main container END -->
+<script src="../js/index.js"></script>
+  <script>
+    let request = new XMLHttpRequest();
+    request.open("GET", "http://localhost:8080/ViewEntryModuleList", true);
+    request.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+    request.setRequestHeader('Access-Control-Allow-Origin', "*");
+    var data = {};
+    request.send();
+    request.onload = () => {
+      console.log("Request : " + request.status);
+      if (request.status == 200) {
+        const jsonData = JSON.parse(request.response);
+        console.log("jsonData : " + jsonData);
+
+        var text = "";
+        for (let i = 0; i < jsonData.length; i++) {
+          text += "<tr><td>" + (i + 1) + "</td><td>" + jsonData[i].name + "</td><td>" + jsonData[i].designation_name
+            + "</td><td>" + jsonData[i].division_name + "</td><td>" + jsonData[i].mobile + "</td><td>"
+            + jsonData[i].purpose + "</td><td>" + jsonData[i].date + "</td><td>" + jsonData[i].to_time + "</td>"
+            + "<td>" + jsonData[i].till_time + "</td><td>" + jsonData[i].cdt + "</td><td>" + jsonData[i].status + "</td>"
+            + "<td><button id='" + jsonData[i].id + "'  class='btn btn-primary' onclick='viewfunc(this.id)'>View</button>"
+            + "</td></tr>";
+        }
+        console.log(text)
+        document.getElementById("tbody").innerHTML = text;
+      }
+      else {
+        window.location.href = "../index.html";
+      }
+    }
+  </script>
+
+  <!-- Additional JS -->
+  <script src="./js/jquery-3.5.1.js"></script>
+  <script src="./js/bootstrap.bundle.js"></script>
+  <script src="./js/blocs.js"></script><!-- Additional JS END -->
+  <script>
+    $(function () {
+      $(document).ready(function () {
+        $('#example').DataTable();
+      });
+    });
+  </script>
+
+  <script>
+(function ($) {
+  $(function () {
+    //  open and close nav
+    $("#navbar-toggle").click(function () {
+      $("nav ul").slideToggle();
+    });
+
+    // Hamburger toggle
+    $("#navbar-toggle").on("click", function () {
+      this.classList.toggle("active");
+    });
+
+    // If a link has a dropdown, add sub menu toggle.
+    $("nav ul li a:not(:only-child)").click(function (e) {
+      $(this).siblings(".navbar-dropdown").slideToggle("slow");
+
+      // Close dropdown when select another dropdown
+      $(".navbar-dropdown").not($(this).siblings()).hide("slow");
+      e.stopPropagation();
+    });
+
+    // Click outside the dropdown will remove the dropdown class
+    $("html").click(function () {
+      $(".navbar-dropdown").hide();
+    });
+  });
+})(jQuery);
+  </script>
+</body>
+
+</html>

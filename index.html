@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="canonical" href="http://setTheBaseURLInProjectSettings.com/index.html" />
+    <meta name="robots" content="index, follow" />
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="./css/all.min.css">
+
+
+    <title>CSIR</title>
+
+
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div id="page-loading-blocs-notifaction" class="page-preloader"></div>
+    <div id="loading"></div>
+    <!-- Preloader END -->
+    <header id="header"></header>
+
+
+
+    <div class="container bloc-lg bloc-sm-lg"></div>
+    <!-- bloc-1 -->
+    <div class="bloc bg-149918-sv full-width-bloc l-bloc" style="background-image: url(img/149918_sv.jpg);" id="bloc-1">
+        <div class="container bloc-xxl-lg bloc-xl-md">
+            <div class="row align-items-end" style="flex-direction: row-reverse;">
+                <div class="col align-self-end">
+                    <div class="text-right" style="display: flex;flex-direction: row-reverse;" >
+
+                        <div class="bloc tc-black" id="bloc-2" style="width: 50%;">
+                            <div class="container bloc-lg">
+                                <div class="row" style="flex-direction: row-reverse;">
+                                    <div class="col-lg-6 offset-lg-3">
+                                        <div class="card">
+                                            <div class="card-header" style="border:none;">
+                                                <h3 class="mg-clear text-lg-center tc-black">
+                                                    <strong>Login Page</strong>
+                                                </h3>
+                                            </div>
+                                            <div><span id="messageReponse"></span></div>
+                                            <div style="display: none;"><input id="role" type="text"></div>
+                                            <div class="card-body" id="login">
+                                                <div class="form-group">
+                                                    <label class="text-lg-left label-style">
+                                                        Username
+                                                    </label>
+                                                    <input class="form-control field-style" id="username"
+                                                        name="username"
+                                                        data-validation-required-message="Enter Username"
+                                                        placeholder="Enter your Username" />
+                                                    <span id="outputUsername"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="text-lg-left label-password-style">
+                                                        Password
+                                                    </label>
+                                                    <input class="form-control" id="pswd" name="pswd"
+                                                        data-validation-required-message="Enter Password"
+                                                        type="password" placeholder="Enter your Password" />
+                                                    <span id="outputPassword"></span>
+                                                </div>
+
+
+                                                <!-- <canvas id="captcha">captcha text</canvas>
+                                                <div class="text-center">
+                                                    <input class="form-control field-style" id="textBox" type="text"
+                                                        name="text" placeholder="Enter Captcha"
+                                                        data-validation-required-message="Enter Captcha">
+                                                    <span id="output"></span>
+                                                </div> -->
+                                                <div id="buttons" class="text-center" style="margin-top:10px;">
+                                                    <!-- <button id="refreshButton" type="submit"><a
+                                                            class="btn btn-lg btn-clean btn-true-blue">Refresh</a></button> -->
+                                                    <input type="submit" id="submitButton" onclick="login()"
+                                                        class="btn btn-lg btn-clean btn-true-blue" value="Login">
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <a href="loginpage.html" class="btn btn-true-blue btn-xl btn-clean"><span class="icon-spacer fa fa-user icon-white"></span>Login</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- bloc-1 END -->
+
+    <!-- ScrollToTop Button -->
+    <a class="bloc-button btn btn-d scrollToTop" onclick="scrollToTarget('1',this)"><svg
+            xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
+            <path class="scroll-to-top-btn-icon" d="M30,22.656l-14-13-14,13" />
+        </svg></a>
+    <!-- ScrollToTop Button END-->
+
+
+    </div>
+    <!-- Main container END -->
+    <script src="../js/index.js"></script>
+    <script>
+        function login() {
+            const username = document.getElementById('username').value
+            const password = document.getElementById('pswd').value
+            const messageReponse = document.getElementById("messageReponse");
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8080/token', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                        sessionStorage.setItem('token', xhr.responseText)
+                        isHod();
+                        // var role = document.getElementById("role").value;
+                        // console.log("------------" + role)
+
+                    }
+                    else {
+                        messageReponse.textContent = '* Incorrect Username/ Password!';
+                        messageReponse.style.color = "red";
+                        window.location = "index.html"
+                    }
+                }
+            };
+
+            var data = {
+                email_id: username,
+                password: password
+            };
+
+            xhr.send(JSON.stringify(data))
+        }
+
+        function isHod() {
+            let request = new XMLHttpRequest();
+            request.open("GET", "http://localhost:8080/getRole");
+            request.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
+            request.setRequestHeader('Access-Control-Allow-Origin', "*");
+            request.send();
+            request.onload = () => {
+                console.log(request);
+                if (request.status == 200) {
+                    // const jsonData = JSON.parse(request.response);
+                    console.log(request.response);
+                    // document.getElementById("role").value = request.response;
+
+                    if (request.response == 'ROLE_USER')
+                        window.location.href = "booking/my_booking.html";
+                    else if (request.response == 'ROLE_HOD')
+                        window.location.href = "sanction/dashboard.html";
+                    else if (request.response == 'ROLE_TRANS')
+                        window.location.href = "transport/dashboard.html";
+                    else if (request.response == 'ROLE_ADMIN')
+                        window.location.href = "admin/user_list.html";
+                    else
+                        window.location.href = "index.html";
+                }
+                else {
+                    window.location = "index.html"
+                }
+            }
+        }
+
+
+    </script>
+    <!-- Additional JS -->
+    <script src="./js/jquery-3.5.1.js"></script>
+    <script src="./js/bootstrap.bundle.js"></script>
+    <script src="./js/blocs.js"></script><!-- Additional JS END -->
+    <!-- <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script> -->
+</body>
+
+</html>
